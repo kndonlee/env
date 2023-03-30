@@ -21,7 +21,7 @@ set showmatch               " show matching parenthesis
 
 " --- remove sounds effects ---
 set noerrorbells
-set visualbell
+" set visualbell
 
 set expandtab                   " Expand tabs to spaces
 set autoindent smartindent      " auto/smart indent
