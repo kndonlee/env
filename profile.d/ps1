@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 function ps1_color { echo -e "\[\e[${1}m\]"; }
 
 RESET=$(ps1_color 0)
@@ -10,7 +12,6 @@ CYAN=$(ps1_color 36);   LIGHT_CYAN=$(ps1_color 1\;36)
 GRAY=$(ps1_color 37)
 
 source $(brew --prefix)/etc/bash_completion.d/git-prompt.sh
-#source $(brew --prefix)/opt/kube-ps1/share/kube-ps1.sh
 
 # see git-prompt.sh
 GIT_PS1_SHOWDIRTYSTATE=true # show if your tree is dirty
@@ -19,16 +20,19 @@ GIT_PS1_SHOWUNTRACKEDFILES=true # show if you have untracked files
 GIT_PS1_DESCRIBE_STYLE=default # info on detached head state
 GIT_PS1_SHOWCOLORHINTS=true # use color hints
 
-# kube ps1
-KUBE_PS1_PREFIX='['
-KUBE_PS1_SUFFIX=']'
-KUBE_PS1_CTX_COLOR=magenta
-KUBE_PS1_NS_COLOR=magenta
+# source $(brew --prefix)/opt/kube-ps1/share/kube-ps1.sh
+# KUBE_PS1_PREFIX='['
+# KUBE_PS1_SUFFIX=']'
+# KUBE_PS1_CTX_COLOR=magenta
+# KUBE_PS1_NS_COLOR=magenta
+
+# add to PROMPT_COMMAND for k8s
+#
+#"${CYAN}\w${RESET} \$(kube_ps1)" \
+#_kube_ps1_update_cache
 
 PROMPT_COMMAND='
 __rv=$?
-_kube_ps1_update_cache
-__git_ps1 \
-"${CYAN}\w${RESET} \$(kube_ps1)" \
-"$([[ $__rv -ne 0 ]] && echo -en " ${RED}[$__rv]") ${LIGHT_BLUE}\$${RESET} "
+__git_ps1 "${CYAN}\w${RESET}" \
+"$([[ $__rv -ne 0 ]] && echo -en "${RED}[$__rv]") ${LIGHT_BLUE}\$${RESET} "
 '
